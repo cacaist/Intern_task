@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
@@ -9,9 +9,6 @@ function Login() {
   const [error, setError] = useState("");
  
   const navigate = useNavigate();
-  useEffect(() => {
-    setError("");
-  }, [email, password]);
   const handleLogin = (e) => {
     e.preventDefault();
     
@@ -21,7 +18,9 @@ function Login() {
       return;
     }
 
-    if (!email.includes("@")) {
+    // Email validation with regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
       setError("Are you sure that's an email?");
       return;
     }
@@ -67,14 +66,20 @@ function Login() {
           type="email" 
           placeholder="Your Email" 
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            if (error) setError("");
+          }}
         />
 
         <input 
           type="password" 
           placeholder="Password" 
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => {
+            setPassword(e.target.value);
+            if (error) setError("");
+          }}
         />
 
         {error && <p className="error-text">{error}</p>}

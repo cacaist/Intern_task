@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
@@ -36,10 +36,8 @@ function Login() {
     navigate('/welcome', { state: { userEmail: email } });
   };
   //snow
-  const renderSnowflakes = () => {
-
+  const snowflakes = useMemo(() => {
     return [...Array(50)].map((_, i) => {
-
       const randomStyle = {
         left: `${Math.random() * 100}%`,
         animationDelay: `${Math.random() * 7}s`, 
@@ -52,11 +50,11 @@ function Login() {
         <div key={i} className="snowflake" style={randomStyle}> ❅ </div>
       );
     });
-  };
+  }, []);
 
   return (
     <div className="login-bg">
-      {renderSnowflakes()}
+      {snowflakes}
     <div className="login-card-wrapper"> 
     <div className="login-container">
       <h1>Login</h1>

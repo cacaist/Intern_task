@@ -41,5 +41,16 @@ It's super simple:
 
 Open the link provided in the terminal to see it in action.
 
+##  Encountered Issues & Solutions
+
+### Warning: Calling setState synchronously within an effect
+
+**Issue:**
+A warning was received stating: *"Calling setState synchronously within an effect can trigger cascading renders."*
+**Cause:**
+The `useEffect` hook runs after the component renders. Updating the state (via `setState`) immediately within the effect forces React to re-render the component again. This cycle creates unnecessary re-renders (cascading), which negatively impacts performance.
+
+**Solution:**
+The logic to clear the error message was removed from `useEffect`. Instead, the `setError("")` call was moved to the `onChange` event handlers of the input fields. This ensures the state is updated only when the user explicitly interacts with the inputs, preventing automatic render loops.
 ---
 *Intern Task 2025 - Made by Çağatay
